@@ -1,0 +1,62 @@
+<h2>Student</h2>
+<h3><i>Registration Details</i></h3>
+<form [formGroup]="studentForm" novalidate (ngSubmit)="onSubmit()" class="col-md-6 studentForm">
+  <div class="form-group" [ngClass]="{'has-error':!studentForm.controls['firstName'].valid
+   && studentForm.controls['firstName'].touched}">
+    <label class="center-block">First Name:
+  <input class="form-control" formControlName="firstName">
+    </label>
+  </div>
+  <div class="form-group" [ngClass]="{'has-error':!studentForm.controls['lastName'].valid
+   && studentForm.controls['lastName'].touched}">
+    <label class="center-block">Last Name:
+  <input class="form-control" formControlName="lastName">
+    </label>
+  </div>
+  <div formArrayName="addresses" class="well well-lg">
+    <div *ngFor="let address of studentForm.controls.addresses.controls; let i=index" [formGroupName]="i">
+      <div class="panel panel-default">
+        <div class="panel-heading">Address #{{i + 1}}</div>
+        <div class="panel-body">
+          <div class="form-group" [ngClass]="{'has-error':!address.controls['addressLine1'].valid
+       && address.controls['addressLine1'].touched}">
+            <label class="center-block">Address Line 1:
+                <input class="form-control" formControlName="addressLine1">
+                  </label>
+          </div>
+          <div class="form-group">
+            <label class="center-block">Address Line 2:
+                <input class="form-control" formControlName="addressLine2">
+                  </label>
+          </div>
+          <div class="form-group" [ngClass]="{'has-error':!address.controls['city'].valid
+       && address.controls['city'].touched}">
+            <label class="center-block">City:
+                <input class="form-control" formControlName="city">
+                  </label>
+          </div>
+          <div class="form-group" [ngClass]="{'has-error':!address.controls['county'].valid
+       && address.controls['county'].touched}">
+            <label class="center-block">County:
+                <input class="form-control" formControlName="county">
+                  </label>
+          </div>
+          <div class="form-group" [ngClass]="{'has-error':!address.controls['postCode'].valid
+       && address.controls['postCode'].touched}">
+            <label class="center-block">Postcode:
+        <input class="form-control" formControlName="postCode">
+        </label>
+          </div>
+          <div class="studentForm">
+            <button class="btn btn-primary" (click)="addAddress()">Add Address</button>
+            <button class="btn btn-primary" (click)="removeAddress(i)">Remove Address</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="submit" [disabled]="!studentForm.valid" class="btn btn-primary">Submit</button>
+  <p>Form value: {{ studentForm.value | json }}</p>
+  <p>Form status: {{ studentForm.status | json }}</p>
+  <p>Form valid: {{ studentForm.valid | json }}</p>
+</form>
